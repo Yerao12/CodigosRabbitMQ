@@ -1,0 +1,14 @@
+import pika,math
+
+num = int(input("Digite um numero: "))
+
+num = str(math.factorial(num))
+
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+channel = connection.channel()
+
+channel.queue_declare(queue='hello')
+
+channel.basic_publish(exchange='', routing_key='hello', body= num)
+print(" Enviou ")
+connection.close()
